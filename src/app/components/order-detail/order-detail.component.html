@@ -1,0 +1,92 @@
+<div class="container">
+  <div class="confirmation-container">
+    <h1 class="text-center">Order detail</h1>
+    <p>Cảm ơn bạn đã đặt hàng! Dưới đây là thông tin chi tiết về đơn hàng của bạn</p>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <h2 class="product-header">Receiver's information</h2>
+      <div class="mb-3">
+        <p class="form-label">Full name: {{ orderResponse.fullname }}</p>
+      </div>
+      <div class="mb-3">
+        <p class="form-label">Email: {{ orderResponse.email }}</p>
+      </div>
+      <div class="mb-3">
+        <p class="form-label">Phone number: {{ orderResponse.phone_number }}</p>
+      </div>
+      <div class="mb-3">
+        <p class="form-label">Address: {{ orderResponse.address }}</p>
+      </div>
+      <div class="mb-3">
+        <p class="form-label">Note: {{ orderResponse.note }}</p>
+      </div>
+      <div class="form-group mb-3">
+        <p class="form-label">Shipping method: {{ orderResponse.shipping_method }}</p>
+
+      </div>
+      <div class="form-group mb-3">
+        <p class="form-label">Payment method: {{ orderResponse.payment_method }}</p>
+
+      </div>
+    </div>
+    <div class="col-md-8">
+      <h2 class="product-order">Product ordered</h2>
+      <table>
+        <thead>
+        <tr>
+          <th scope="col" class="text-start">Product</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Price</th>
+          <th scope="col">Total price</th>
+          <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngFor="let order of orderResponse.order_details">
+          <tr>
+            <td>
+              <div class="product-info">
+                <img
+                  [src]="order.product?.thumbnail"
+                  alt="Product Image"
+                  class="product-image"
+                />
+                <span class="product-name"></span>
+              </div>
+            </td>
+            <td>
+              <div class="product-quantity">
+                <div class="border-wrapper">
+                  <button (click)="decrementQuantity(order)">-</button>
+                  <input type="text" [value]="order.numberOfProducts" readonly/>
+                  <button (click)="incrementQuantity(order)">+</button>
+                </div>
+              </div>
+            </td>
+
+            <td>
+              {{ order.price | number: '1.2-2' }}
+            </td>
+            <td>
+              {{
+                order.totalMoney
+                  | number: '1.2-2'
+              }}
+            </td>
+            <td>
+              <button class="btn btn-danger">Delete</button>
+            </td>
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+      <div class="text-start mt-3">
+        <h4 class="header-text text-end">
+          Total amount: {{ orderResponse.total_money | currency: "VND" : "symbol" : "1.0-0" }}
+        </h4>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<div class="table-container">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Thumbnail</th>
+      <th>Description</th>
+      <th>Category</th>
+      <th>Create at</th>
+      <th>Update at</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let product of products">
+      <td>{{ product.id }}</td>
+      <td>{{ product.name }}</td>
+      <td>{{ product.price }}</td>
+      <td>{{ product.thumbnail }}</td>
+      <td>{{ product.description }}</td>
+      <td>{{ product.category_id }}</td>
+      <td>{{ product.create_at | date }}</td>
+      <td>{{ product.update_at | date }}</td>
+
+      <td>
+        <div class="d-flex flex-nowrap">
+          <button (click)="deleteProduct(product.id)" class="btn btn-danger">Delete</button>
+          <button class="btn btn-info mx-2" (click)="navigateToProductDetail(product.id)">View as user</button>
+          <button class="btn btn-info " (click)="navigateToOrders(product.id)">View orders</button>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

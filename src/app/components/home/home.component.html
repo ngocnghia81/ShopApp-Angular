@@ -1,0 +1,85 @@
+<div class="container">
+  <div class="intro-section">
+    <h1>This is Home Page</h1>
+
+  </div>
+  <div class="search-box">
+    <input
+      type="text"
+      class="form-control search-input"
+      placeholder="Search products"
+      name="keyword"
+      ngDefaultControl
+      [(ngModel)]="keyword"
+    />
+    <select class="form-control product-category">
+      <option selected disabled [(ngModel)]="selectedCategory" ngDefaultControl name="selectedCategory">Categories</option>
+      @for(category of categories; track category.id){
+        <option [value]="category.id">{{ category.name }}</option>
+      }
+    </select>
+    <button class="btn btn-light search-button" (click)="searchProducts()">Search</button>
+  </div>
+  <div class="row">
+    <div class="col-lg-4 col-md-6" *ngFor="let prod of products??null">
+      <div class="product-item" (click)="onProductClick(prod.id??0)">
+        <img
+          [src]="prod.thumbnail" width="800" height="600"
+          alt="Product Image"
+          class="product-image">
+        <h3 class="product-name">{{ prod.name }}</h3>
+        <p class="product-description">{{ prod.description }}</p>
+        <p class="product-warranty">Bảo hành: 12 tháng</p>
+        <p class="product-price">Giá:
+          <del>$200</del>
+          ${{ prod.price }}
+        </p>
+        <div class="product-rating">
+          <fa-icon [icon]="faStar"></fa-icon>
+          <fa-icon [icon]="faStar"></fa-icon>
+          <fa-icon [icon]="faStar"></fa-icon>
+          <fa-icon [icon]="faStar"></fa-icon>
+          <fa-icon [icon]="faStarHalfAlt"></fa-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="d-flex justify-content-center">
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <!-- First Page Button -->
+      @if(currentPage > 1){
+        <li class="page-item">
+          <a class="page-link" (click)="onPageChange(1)">First</a>
+        </li>
+      }
+      <!-- Previous Page Button -->
+      @if(currentPage > 1){
+        <li class="page-item" >
+          <a class="page-link" (click)="onPageChange(currentPage - 1)">Previous</a>
+        </li>
+      }
+      <!-- Visible Page Numbers -->
+      @for (page of visiblePages; track $index){
+        <li class="page-item" [ngClass]="{'active': page === currentPage}">
+          <a class="page-link" (click)="onPageChange(page)">{{ page }}</a>
+        </li>
+      }
+      <!-- Next Page Button -->
+      @if (currentPage < (totalPages ? totalPages : 0)){
+        <li class="page-item" >
+          <a class="page-link" (click)="onPageChange(currentPage + 1)">Next</a>
+        </li>
+      }
+
+      <!-- Last Page Button -->
+      @if(currentPage < (totalPages ? totalPages : 0)){
+        <li class="page-item">
+          <a class="page-link" (click)="onPageChange(totalPages ? totalPages : 0)">Last</a>
+        </li>
+      }
+    </ul>
+  </nav>
+</div>
+

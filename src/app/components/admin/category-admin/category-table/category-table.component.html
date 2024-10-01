@@ -1,0 +1,21 @@
+<div class="table-container">
+  <table class="table table-striped justify-content-between">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let category of categories">
+      <td>{{ category.id }}</td>
+      <td>{{ category.name }}</td>
+
+      <td>
+        <button (click)="deleteProduct(category.id)" class="btn btn-danger">Delete</button>
+        <button class="btn btn-info m-lg-2" (click)="navigateToProductDetail(category.id)">View</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

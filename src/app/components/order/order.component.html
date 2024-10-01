@@ -1,0 +1,207 @@
+<div class="container">
+  <div class="intro-section">
+    <h1>Đây là trang Order</h1>
+    <p>Sử dụng Bootstrap</p>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <h2 class="product-header">Receiver's information</h2>
+      <form [formGroup]="receiverInfoForm">
+        <div class="mb-3">
+          <label for="name" class="form-label">Full name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            required
+            formControlName="fullname"
+            [class.is-invalid]="
+              receiverInfoForm.get('fullname')!.invalid &&
+              receiverInfoForm.get('fullname')?.touched
+            "
+          />
+          @if(receiverInfoForm.get('fullname')!.invalid && receiverInfoForm.get('fullname')?.touched){
+            <small class="ng-feedback">Full name is required</small>
+          }
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            required
+            formControlName="email"
+            [class.is-invalid]="
+              receiverInfoForm.get('email')!.invalid &&
+              receiverInfoForm.get('email')?.touched
+            "
+          />
+          @if(receiverInfoForm.get('email')!.invalid && receiverInfoForm.get('email')?.touched){
+            <small class="ng-feedback">Email is required</small>
+          }
+        </div>
+        <div class="mb-3">
+          <label for="phone_number" class="form-label">Phone number</label>
+          <input
+            type="text"
+            class="form-control"
+            id="phone_number"
+            name="phone_number"
+            required
+            formControlName="phone_number"
+            [class.is-invalid]="
+              receiverInfoForm.get('phone_number')!.invalid &&
+              receiverInfoForm.get('phone_number')?.touched
+            "
+          />
+          @if(receiverInfoForm.get('phone_number')!.invalid && receiverInfoForm.get('phone_number')?.touched){
+            <small class="ng-feedback">Phone number is required</small>
+          }
+        </div>
+        <div class="mb-3">
+          <label for="address" class="form-label">Address</label>
+          <input
+            type="text"
+            class="form-control"
+            id="address"
+            name="address"
+            required
+            formControlName="address"
+            [class.is-invalid]="
+              receiverInfoForm.get('address')!.invalid &&
+              receiverInfoForm.get('address')?.touched
+            "
+          />
+          @if(receiverInfoForm.get('address')!.invalid && receiverInfoForm.get('address')?.touched){
+            <small class="ng-feedback">Address is required</small>
+          }
+        </div>
+        <div class="mb-3">
+          <label for="note" class="form-label">Note</label>
+          <input
+            type="text"
+            class="form-control"
+            id="note"
+            name="note"
+            formControlName="note"
+          />
+        </div>
+        <div class="form-group mb-3">
+          <label for="shipping_method" class="form-label">Shipping method</label>
+          <select
+            class="form-control"
+            id="shipping_method"
+            name="shipping_method"
+            formControlName="shipping_method"
+            [class.is-invalid]="
+              receiverInfoForm.get('shipping_method')!.invalid &&
+              receiverInfoForm.get('shipping_method')?.touched
+            "
+          >
+            <option value="express">Express</option>
+            <option value="normal">Normal</option>
+          </select>
+          @if(receiverInfoForm.get('shipping_method')!.invalid && receiverInfoForm.get('shipping_method')?.touched){
+            <small class="ng-feedback">Please choose a shipping method</small>
+          }
+        </div>
+        <div class="form-group mb-3">
+          <label for="payment_method" class="form-label">Payment methods</label>
+          <select
+            class="form-control"
+            id="payment_method"
+            name="payment_method"
+            formControlName="payment_method"
+            [class.is-invalid]="
+              receiverInfoForm.get('payment_method')!.invalid &&
+              receiverInfoForm.get('payment_method')?.touched
+            "
+          >
+            <option value="cod">Cash on delivery(COD)</option>
+            <option value="other">Other</option>
+          </select>
+          @if(receiverInfoForm.get('payment_method')!.invalid && receiverInfoForm.get('payment_method')?.touched){
+            <small class="ng-feedback">Please choose a payment method</small>
+          }
+        </div>
+      </form>
+    </div>
+    <div class="col-md-8">
+      <h2 class="product-order">Product ordered</h2>
+      <table>
+        <thead>
+        <tr>
+          <th scope="col" class="text-start">Product</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Price</th>
+          <th scope="col">Total price</th>
+          <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngFor="let item of cartItems">
+          <tr>
+            <td>
+              <div class="product-info">
+                <img
+                  [src]="item.product.thumbnail"
+                  alt="Product Image"
+                  class="product-image"
+                />
+                <span class="product-name">{{ item.product.name }}</span>
+              </div>
+            </td>
+            <td>
+              <div class="product-quantity">
+                <div class="border-wrapper">
+                  <button (click)="decrementQuantity(item)">-</button>
+                  <input type="text" class="" [value]="item.quantity" readonly />
+                  <button (click)="incrementQuantity(item)">+</button>
+                </div>
+              </div>
+            </td>
+            <td>
+              {{ item.product?.price ?? 0 | currency: "VND" : "symbol" : "1.0-0" }}
+            </td>
+            <td>
+              {{
+                (item.product?.price ?? 0) * (item?.quantity ?? 0)
+                  | currency: "VND" : "symbol" : "1.0-0"
+              }}
+              đ
+            </td>
+            >
+            <td>
+              <button class="btn btn-danger" (click)="deleteItemFromCart(item)">Delete</button>
+            </td>
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+      <div class="text-start mt-3">
+        <h4 class="header-text text-end">
+          Total amount: {{ totalAmount | currency: "VND" : "symbol" : "1.0-0" }}
+        </h4>
+      </div>
+      <div class="mt-3">
+        <h4 class="product-header">Coupon</h4>
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control text-white"
+            placeholder="Coupon"
+          />
+          <button class="btn btn-gradient" type="button">Apply</button>
+        </div>
+      </div>
+      <div class="text-start mt-3">
+        <button class="btn btn-gradient" type="button" (click)="placeOrder()">
+          Buy
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

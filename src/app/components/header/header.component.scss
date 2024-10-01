@@ -1,0 +1,50 @@
+@import "../../components/styles/share.style.scss";
+
+header {
+  background-color: rgba(0, 0, 0, 0);
+  color: rgb(173, 178, 203);
+}
+
+.navbar {
+  background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.navbar .container {
+  background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.navbar .container .navbar-brand {
+  color: rgb(173, 178, 203);
+}
+
+.navbar .container .navbar-nav .nav-link {
+  color: rgb(173, 178, 203);
+  border-radius: 18px;
+  padding: 8px 16px;
+}
+
+.navbar .container .navbar-nav .nav-link.active {
+  background-color: $shopapp-color !important;
+  color: white !important;
+}
+
+/* Nếu muốn có hiệu ứng mượt mà hơn */
+.ngb-dp.ngb-dropdown-menu {
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0;
+}
+
+.ngb-dp.ngb-dropdown-menu.show {
+  opacity: 1;
+}
+
+// header.component.scss
+.dropdown-item {
+  transition: background-color 0.3s ease; // Thêm transition để smooth khi hover
+
+  &:hover {
+    color: white;
+    background-color: darken(#1d1d45, 10%); // Tăng độ tương phản khi hover
+  }
+}
+
